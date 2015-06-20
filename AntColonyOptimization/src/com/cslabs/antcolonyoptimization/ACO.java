@@ -54,13 +54,9 @@ public class ACO {
 
 	void start() {
 
-		//initACO(pActivity);
-
-		//draw();
-
 		int time = 0;
 		int iter_counter = 0;
-		while (time < num_ants * num_cities / 0.75) {
+		while (time < (num_ants * num_cities)) {
 			time++;
 
 			if (moveAnts() == 0) { // all the ants stopped moving
@@ -157,7 +153,7 @@ public class ACO {
 		//num_cities = 10;
 		num_cities = mCityRects.size();
 		Debug.i(TAG, "number of cities = " + num_cities);
-		num_ants = 20; 
+		num_ants = (int) (mCityRects.size() * 1.2); 
 
 		best_tour = 100000.0f;
 		base_pherom = (float) (1.0 / num_cities);
@@ -400,6 +396,11 @@ public class ACO {
 		// initialise text
 		mActivity.mCitiesText.setText("Cities: " + num_cities);
 	}
+	
+	
+	/**
+	 * detached the edges (lines) from the scene
+	 */
 	public void removeEdges() {
 		for(int from = 0; from < num_cities; from++) {
 			for(int to = from + 1; to < num_cities; to++) {
@@ -408,11 +409,6 @@ public class ACO {
 		}
 	}
 	
-	public void removeCities() {
-		for(int i = num_cities - 1; i >= 0; i++) {
-			
-		}
-	}
 
 	// INNER CLASSES
 

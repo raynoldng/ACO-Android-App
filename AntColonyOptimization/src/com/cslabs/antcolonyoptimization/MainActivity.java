@@ -151,7 +151,6 @@ public class MainActivity extends BaseGameActivity implements IOnSceneTouchListe
 
 		// bounding box
 		Rectangle mboundBox = new Rectangle(CAMERA_WIDTH/2, CAMERA_HEIGHT/2, CAMERA_WIDTH, (float) (0.8 * CAMERA_HEIGHT), mEngine.getVertexBufferObjectManager());
-		
 		this.mScene.registerTouchArea(mRunAntsButton);
 		this.mScene.registerTouchArea(mClearAllButton);
 		
@@ -161,7 +160,7 @@ public class MainActivity extends BaseGameActivity implements IOnSceneTouchListe
 		
 		this.mScene.setOnAreaTouchListener(this);
 		this.mScene.setOnSceneTouchListener(this);
-		
+		this.mScene.setTouchAreaBindingOnActionDownEnabled(true); 
 		
 		// Create ACO object
 		//mACO = new ACO();
@@ -174,10 +173,6 @@ public class MainActivity extends BaseGameActivity implements IOnSceneTouchListe
 	public void onPopulateScene(Scene pScene,
 			OnPopulateSceneCallback pOnPopulateSceneCallback)
 			throws IOException {
-
-
-		// register update handler to update the timer text
-		this.mScene.registerUpdateHandler(mTimerTextUpdate);
 		
 		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
@@ -214,12 +209,17 @@ public class MainActivity extends BaseGameActivity implements IOnSceneTouchListe
 						}
 
 					});
+					
+					mTime = 0.0f;
+					this.mScene.registerUpdateHandler(mTimerTextUpdate);
 
 					mACOBkgdThread.start();
 				}
+				
+				
 				if (((Sprite) pTouchArea).getUserData().equals("Clear All")) {
 					Debug.i(TAG, "Clear all button clicked");
-
+					
 					if(mACO != null) mACO.removeEdges();
 					for (int i = mCities.size() - 1; i >= 0; i--) {
 						mScene.detachChild(mCities.get(i));
@@ -258,8 +258,12 @@ public class MainActivity extends BaseGameActivity implements IOnSceneTouchListe
 
 		@Override
 		public void onUpdate(float pSecondsElapsed) {
-			mTime += pSecondsElapsed;
-			mTimerText.setText("Time(s): " + (int) mTime);
+			
+			if (mACO != null) {
+				mTime += pSecondsElapsed;
+				mTimerText.setText("Time(s): " + (int) mTime);
+			}
+			
 		}
 
 		@Override

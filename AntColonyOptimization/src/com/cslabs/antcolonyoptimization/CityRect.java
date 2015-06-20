@@ -37,13 +37,8 @@ public class CityRect extends Rectangle {
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
 			float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		
-		if(pSceneTouchEvent.isActionDown()) {
-			this.setColor(Color.RED);
-		}
-		
-		if(pSceneTouchEvent.isActionMove()) {
-			this.setPosition(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
-		}
+		this.setPosition(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+		this.setColor(Color.RED);
 		
 		if(pSceneTouchEvent.isActionUp()) {
 			this.setColor(Color.BLACK);
