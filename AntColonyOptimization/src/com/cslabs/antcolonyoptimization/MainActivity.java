@@ -219,13 +219,13 @@ public class MainActivity extends BaseGameActivity implements IOnSceneTouchListe
 				}
 				if (((Sprite) pTouchArea).getUserData().equals("Clear All")) {
 					Debug.i(TAG, "Clear all button clicked");
-					
-					mACO.removeEdges();
-					int num_cities = mCities.size();
-					for(int i = num_cities - 1; i >= 0; i--) {
+
+					if(mACO != null) mACO.removeEdges();
+					for (int i = mCities.size() - 1; i >= 0; i--) {
 						mScene.detachChild(mCities.get(i));
 						mCities.remove(i);
 					}
+
 				}
 			}
 		}
